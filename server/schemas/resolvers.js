@@ -6,15 +6,15 @@ const resolvers = {
     Query: {
         me: async (parent, args, context) => {
             if (context.user) {
-                const userData = await User.findOne({_id: context.user._id}).select('__v -password');
+                const userData = await User.findOne({_id: context.user._id})
             } 
             throw new AuthenticationError('You need to be logged in!');
         },
     },
 
     Mutation: {
-        login: async (parent, {email, password}) => {
-            const user = await User.findOne({email});
+        loginUser: async (parent, {email, password}) => {
+            const user = await User.findOne({email: email});
             if (!user) {
               throw new AuthenticationError("Can't find this user");
             }
